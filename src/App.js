@@ -52,17 +52,27 @@ const App = () => {
       });
   };
 
-
   const updateTaskCompletion = (taskId) => {
-    setTasks((prevTasks) => {
-      return prevTasks.map((task) => {
-        if (task.id === taskId) {
-          return { ...task, isComplete: !task.isComplete };
-        }
-        return task;
-      });
+    const newTasks = tasks.map((task) => {
+      if (task.id === taskId && !task.isComplete) {
+        axios
+          .patch((`${URL}/${taskId}/mark_complete`))
+          .then(() => setTasks(newTasks))
+          .catch((error) => console.log(error));
+      }
     });
   };
+
+  // const updateTaskCompletion = (taskId) => {
+  //   setTasks((prevTasks) => {
+  //     return prevTasks.map((task) => {
+  //       if (task.id === taskId) {
+  //         return { ...task, isComplete: !task.isComplete };
+  //       }
+  //       return task;
+  //     });
+  //   });
+  // };
 
   return (
     <div className="App">
