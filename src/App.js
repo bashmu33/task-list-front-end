@@ -40,7 +40,6 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
-    console.log('yellow')
     axios
       .delete(`${URL}/${taskId}`)
       .then(() => {
