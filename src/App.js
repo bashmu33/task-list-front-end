@@ -27,8 +27,7 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
-    console.log('yellow');
-    axios
+    return axios
       .delete(`${URL}/${taskId}`)
       .then(() => {
         const newTasks = tasks.filter((task) => task.id !== taskId);
@@ -40,15 +39,41 @@ const App = () => {
   };
 
   const updateTaskCompletion = (taskId) => {
-    const newTasks = tasks.map((task) => {
-      if (task.id === taskId && !task.isComplete) {
-        axios
-          .patch((`${URL}/${taskId}/mark_complete`))
-          .then(() => setTasks(newTasks))
-          .catch((error) => console.log(error));
+    let endPoint = '';
+    const updateEndPoint = tasks.map((task) => {
+      if (task.id === taskId && !tasks.isComplete) {
+        return endPoint = 'mark_incomplete';
+      } else if (task.id === taskId && tasks.isComplete) {
+        return endPoint = 'mark_complete';
       }
     });
+    
+
+    return axios
+      .patch((`${URL}/${taskId}/${endPoint}`))
+      .then(() => {
+        setTasks((prevTasks) => {
+          return prevTasks.map((task) => {
+            if (task.id === taskId) {
+              return { ...task, isComplete: !task.isComplete };
+            }
+            return task;
+          });
+        });
+      })
+      .catch((error) => console.log(error));
+
   };
+
+  // {
+  //   setTasks(prevTasks) => {
+  //     prevTasks.map((task) => {
+  //       if (task.id === taskId) {
+  //         {...task, isComplete: !task.isComplete};
+  //       }
+  //     });
+    
+  // });
 
   // const addNewTask = (TASKS) => {
 
