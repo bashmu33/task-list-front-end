@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import TaskList from './components/TaskList.js';
+import NewTaskForm from './components/NewTaskForm.js';
 import './App.css';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 export const URL = 'https://task-list-api-c17.onrender.com/tasks';
@@ -27,11 +29,7 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
-<<<<<<< HEAD
     axios
-=======
-    return axios
->>>>>>> f204eabc0fe666ca4e93e43aee8c4100ea767d8e
       .delete(`${URL}/${taskId}`)
       .then(() => {
         const newTasks = tasks.filter((task) => task.id !== taskId);
@@ -106,7 +104,8 @@ const App = () => {
         <h1>Ada&apos;s Task List</h1>
       </header>
       <main>
-        <div><TaskList tasks={tasks} updateTaskCompletion={updateTaskCompletion} deleteTask={deleteTask}/></div>
+        <TaskList tasks={tasks} updateTaskCompletion={updateTaskCompletion} deleteTask={deleteTask}/>
+        <NewTaskForm addNewTask={addNewTask}/>
       </main>
     </div>
   );
