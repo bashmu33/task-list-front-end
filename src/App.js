@@ -3,23 +3,10 @@ import TaskList from './components/TaskList.js';
 import './App.css';
 import axios from 'axios';
 
-const TASKS = [
-  {
-    id: 1,
-    title: 'Mow the lawn',
-    isComplete: false,
-  },
-  {
-    id: 2,
-    title: 'Cook Pasta',
-    isComplete: true,
-  },
-];
-
 export const URL = 'https://task-list-api-c17.onrender.com/tasks';
 
 const App = () => {
-  const [tasks, setTasks] = useState(TASKS);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     axios
@@ -40,7 +27,11 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
+<<<<<<< HEAD
     axios
+=======
+    return axios
+>>>>>>> f204eabc0fe666ca4e93e43aee8c4100ea767d8e
       .delete(`${URL}/${taskId}`)
       .then(() => {
         const newTasks = tasks.filter((task) => task.id !== taskId);
@@ -52,16 +43,45 @@ const App = () => {
   };
 
   const updateTaskCompletion = (taskId) => {
-    const newTasks = tasks.map((task) => {
-      if (task.id === taskId && !task.isComplete) {
-        axios
-          .patch((`${URL}/${taskId}/mark_complete`))
-          .then(() => setTasks(newTasks))
-          .catch((error) => console.log(error));
+    let endPoint = '';
+    const updateEndPoint = tasks.map((task) => {
+      if (task.id === taskId && !tasks.isComplete) {
+        return endPoint = 'mark_incomplete';
+      } else if (task.id === taskId && tasks.isComplete) {
+        return endPoint = 'mark_complete';
       }
     });
+    
+
+    return axios
+      .patch((`${URL}/${taskId}/${endPoint}`))
+      .then(() => {
+        setTasks((prevTasks) => {
+          return prevTasks.map((task) => {
+            if (task.id === taskId) {
+              return { ...task, isComplete: !task.isComplete };
+            }
+            return task;
+          });
+        });
+      })
+      .catch((error) => console.log(error));
+
   };
 
+  // {
+  //   setTasks(prevTasks) => {
+  //     prevTasks.map((task) => {
+  //       if (task.id === taskId) {
+  //         {...task, isComplete: !task.isComplete};
+  //       }
+  //     });
+    
+  // });
+
+  // const addNewTask = (TASKS) => {
+
+  // }
   // const updateTaskCompletion = (taskId) => {
   //   setTasks((prevTasks) => {
   //     return prevTasks.map((task) => {
