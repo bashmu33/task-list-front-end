@@ -47,7 +47,6 @@ const App = () => {
         return endPoint = 'mark_complete';
       }
     });
-    
 
     return axios
       .patch((`${URL}/${taskId}/${endPoint}`))
@@ -74,9 +73,6 @@ const App = () => {
   //     });
     
   // });
-
-  // const addNewTask = (TASKS) => {
-
   // }
   // const updateTaskCompletion = (taskId) => {
   //   setTasks((prevTasks) => {
@@ -88,6 +84,17 @@ const App = () => {
   //     });
   //   });
   // };
+
+  const addNewTask = (taskData) => {
+    return axios
+      .post(URL, taskData)
+      .then((response) => {
+        const newTasks = [...tasks];
+        newTasks.push({ id: response.data.id, title: '', description: '', isComplete: false, ...tasks });
+        setTasks(newTasks);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="App">
