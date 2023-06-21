@@ -27,11 +27,7 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
-<<<<<<< HEAD
-    axios
-=======
     return axios
->>>>>>> f204eabc0fe666ca4e93e43aee8c4100ea767d8e
       .delete(`${URL}/${taskId}`)
       .then(() => {
         const newTasks = tasks.filter((task) => task.id !== taskId);
@@ -44,12 +40,15 @@ const App = () => {
 
   const updateTaskCompletion = (taskId) => {
     let endPoint = '';
+    // const updateEndPoint = tasks.map((task) => {
+    //   if (task.id === taskId && !tasks.isComplete) {
+    //     return endPoint = 'mark_incomplete';
+    //   } else if (task.id === taskId && tasks.isComplete) {
+    //     return endPoint = 'mark_complete';
+    //   }
+    // });
     const updateEndPoint = tasks.map((task) => {
-      if (task.id === taskId && !tasks.isComplete) {
-        return endPoint = 'mark_incomplete';
-      } else if (task.id === taskId && tasks.isComplete) {
-        return endPoint = 'mark_complete';
-      }
+      task.id === taskId && !task.isComplete ? endPoint = 'mark_incomplete' : endPoint = 'mark_complete';
     });
 
     return axios
