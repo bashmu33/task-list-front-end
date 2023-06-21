@@ -27,7 +27,11 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
+<<<<<<< HEAD
+    axios
+=======
     return axios
+>>>>>>> f204eabc0fe666ca4e93e43aee8c4100ea767d8e
       .delete(`${URL}/${taskId}`)
       .then(() => {
         const newTasks = tasks.filter((task) => task.id !== taskId);
