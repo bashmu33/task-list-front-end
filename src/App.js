@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TaskList from './components/TaskList.js';
 import NewTaskForm from './components/NewTaskForm.js';
 import './App.css';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
 export const URL = 'https://task-list-api-c17.onrender.com/tasks';
@@ -29,7 +28,7 @@ const App = () => {
   }, []);
 
   const deleteTask = (taskId) => {
-    axios
+    return axios
       .delete(`${URL}/${taskId}`)
       .then(() => {
         const newTasks = tasks.filter((task) => task.id !== taskId);
@@ -42,12 +41,15 @@ const App = () => {
 
   const updateTaskCompletion = (taskId) => {
     let endPoint = '';
+    // const updateEndPoint = tasks.map((task) => {
+    //   if (task.id === taskId && !tasks.isComplete) {
+    //     return endPoint = 'mark_incomplete';
+    //   } else if (task.id === taskId && tasks.isComplete) {
+    //     return endPoint = 'mark_complete';
+    //   }
+    // });
     const updateEndPoint = tasks.map((task) => {
-      if (task.id === taskId && !tasks.isComplete) {
-        return endPoint = 'mark_incomplete';
-      } else if (task.id === taskId && tasks.isComplete) {
-        return endPoint = 'mark_complete';
-      }
+      task.id === taskId && !task.isComplete ? endPoint = 'mark_incomplete' : endPoint = 'mark_complete';
     });
 
     return axios
