@@ -8,18 +8,21 @@ export const URL = 'https://task-list-api-c17.onrender.com/tasks';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [taskData, setTaskData] = useState({
+    title: '',
+    description: '',
+    isComplete: false
+  });
 
   useEffect(() => {
     axios
       .get(URL)
       .then((response) => {
-        const newTasks = response.data.map((task) => {
-          return {
+        const newTasks = response.data.map((task) => ({
             id: task.id,
             title: task.title,
-            isComplete: task.isComplete,
-          };
-        });
+            isComplete: task.isComplete || false,
+        }));
         setTasks(newTasks);
       })
       .catch((err) => {
@@ -40,17 +43,7 @@ const App = () => {
   };
 
   const updateTaskCompletion = (taskId) => {
-    let endPoint = '';
-    // const updateEndPoint = tasks.map((task) => {
-    //   if (task.id === taskId && !tasks.isComplete) {
-    //     return endPoint = 'mark_incomplete';
-    //   } else if (task.id === taskId && tasks.isComplete) {
-    //     return endPoint = 'mark_complete';
-    //   }
-    // });
-    const updateEndPoint = tasks.map((task) => {
-      task.id === taskId && !task.isComplete ? endPoint = 'mark_incomplete' : endPoint = 'mark_complete';
-    });
+    let endPoint = tasks.find((task) => task.id === taskId).isComplete ? 'mark_incomplete' : 'mark_complete';
 
     return axios
       .patch((`${URL}/${taskId}/${endPoint}`))
@@ -68,35 +61,19 @@ const App = () => {
 
   };
 
-  // {
-  //   setTasks(prevTasks) => {
-  //     prevTasks.map((task) => {
-  //       if (task.id === taskId) {
-  //         {...task, isComplete: !task.isComplete};
-  //       }
-  //     });
-    
-  // });
-  // }
-  // const updateTaskCompletion = (taskId) => {
-  //   setTasks((prevTasks) => {
-  //     return prevTasks.map((task) => {
-  //       if (task.id === taskId) {
-  //         return { ...task, isComplete: !task.isComplete };
-  //       }
-  //       return task;
-  //     });
-  //   });
-  // };
-
-  const addNewTask = (taskData) => {
-    console.log(taskData);
+  const addNewTask = () => {
     return axios
       .post(URL, taskData)
       .then((response) => {
-        const newTasks = [...tasks];
-        newTasks.push({ id: response.data.id, title: '', description: '', isComplete: false, ...tasks });
-        setTasks(newTasks);
+
+        const newTasks = {
+          id: response.data.id, 
+          title: taskData.title, 
+          description: taskData.description, 
+          isComplete: taskData.isComplete, 
+      };
+          setTasks([...tasks, newTasks]);
+          setTaskData({ title: '', description: '', isComplete: false });
       })
       .catch((error) => console.log(error));
   };

@@ -4,6 +4,7 @@ import Task from './Task';
 import './TaskList.css';
 
 const TaskList = (props) => {
+  console.log(props.tasks);
   return (
     <ul>
       {props.tasks.map((task) => (
