@@ -10,21 +10,36 @@ const NewTaskForm = (props) => {
         isComplete: false,
     });
 
-    const handleAddNewTask = (e) => {
-        setTasks(e.target.value);
-    };
 
     const submitTaskData = (e) => {
         e.preventDefault();
 
         props.addNewTask(taskData);
         setTasks({ title: '', description: '', isComplete: false});
+        };
+
+    const handleAddNewTask = (e) => {
+        const { id, value } = e.target;
+        setTasks((prevState) => ({
+            tasks: {
+                ...prevState.tasks,
+                [id]: value
+            }
+        }));
     };
+
+    // const handleAddNewTask = (e) => {
+    //     setTasks({...taskData, [e.target.title]: e.target.value});
+    //     };
 
     return (
         <form onSubmit={submitTaskData}>
             <h2>Add a Task Here:</h2>
-            <input type="text" onChange={handleAddNewTask} value={taskData.title} />
+            <label htmlFor="title">Title</label>
+            <input type="text" id="title" onChange={handleAddNewTask} value={taskData.title} />
+            <label htmlFor="description">Description</label>
+            <input type="text" id="description" onChange={handleAddNewTask} value={taskData.description} />
+            <button type="submit">Submit</button>
         </form>
     );
 

@@ -107,7 +107,7 @@ const App = () => {
       </header>
       <main>
         <TaskList tasks={tasks} updateTaskCompletion={updateTaskCompletion} deleteTask={deleteTask}/>
-        <NewTaskForm addNewTask={addNewTask}/>
+        <NewTaskForm addNewTask={addNewTask}></NewTaskForm>
       </main>
     </div>
   );

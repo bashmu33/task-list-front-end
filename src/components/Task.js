@@ -13,16 +13,16 @@ const Task = ( props ) => {
     props.deleteTask(props.id);
   };
 
-  const handleAddTask = () => {
-    props.addNewTask(props);
-  }
+  // const handleAddTask = () => {
+  //   props.addNewTask(props);
+  // }
   
   return (
     <li className="tasks__item">
       <button className={`tasks__item__toggle ${buttonClass}`} onClick={handleUpdateTaskCompletion}>
       {props.title}</button>
       <button className="tasks__item__remove button" onClick={handleDeleteTask}>x</button>
-      <button onClick={handleAddTask}>Add New Task!</button>
+      {/* <button onClick={handleAddTask}>Add New Task!</button> */}
     </li>
   );
 };
@@ -33,7 +33,7 @@ Task.propTypes = {
   isComplete: PropTypes.bool.isRequired,
   updateTaskCompletion: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
-  addNewTask: PropTypes.func.isRequired,
+  // addNewTask: PropTypes.func.isRequired,
 };
 
 export default Task;
