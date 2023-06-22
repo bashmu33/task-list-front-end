@@ -90,6 +90,7 @@ const App = () => {
   // };
 
   const addNewTask = (taskData) => {
+    console.log(taskData);
     return axios
       .post(URL, taskData)
       .then((response) => {

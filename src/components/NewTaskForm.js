@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
@@ -15,16 +14,15 @@ const NewTaskForm = (props) => {
         e.preventDefault();
 
         props.addNewTask(taskData);
+        console.log(taskData);
         setTasks({ title: '', description: '', isComplete: false});
         };
 
     const handleAddNewTask = (e) => {
         const { id, value } = e.target;
         setTasks((prevState) => ({
-            tasks: {
-                ...prevState.tasks,
-                [id]: value
-            }
+            ...prevState,
+            [id]: value
         }));
     };
 
