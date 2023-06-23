@@ -61,7 +61,7 @@ const App = () => {
 
   };
 
-  const addNewTask = () => {
+  const addNewTask = (taskData) => {
     return axios
       .post(URL, taskData)
       .then((response) => {

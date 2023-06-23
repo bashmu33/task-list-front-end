@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
 const NewTaskForm = (props) => {
-    const [taskData, setTasks] = useState({
+    const [taskData, setTaskData] = useState({
         title: '',
         description: '',
         isComplete: false,
@@ -14,29 +14,26 @@ const NewTaskForm = (props) => {
         e.preventDefault();
 
         props.addNewTask(taskData);
-        console.log(taskData);
-        setTasks({ title: '', description: '', isComplete: false});
+        setTaskData({ title: '', description: '', isComplete: false});
         };
 
-    const handleAddNewTask = (e) => {
-        const { id, value } = e.target;
-        setTasks((prevState) => ({
-            ...prevState,
-            [id]: value
+        const handleChange = (event) => {
+        const { name, value } = event.target;
+        setTaskData((prevTaskData) => ({
+            ...prevTaskData,
+            [name]: value,
         }));
-    };
-
-    // const handleAddNewTask = (e) => {
-    //     setTasks({...taskData, [e.target.title]: e.target.value});
-    //     };
+        };
+        
 
     return (
         <form onSubmit={submitTaskData}>
             <h2>Add a Task Here:</h2>
             <label htmlFor="title">Title</label>
-            <input type="text" id="title" onChange={handleAddNewTask} value={taskData.title} />
+            <input type="text" id="title" name="title" onChange={handleChange} value={taskData.title} />
             <label htmlFor="description">Description</label>
-            <input type="text" id="description" onChange={handleAddNewTask} value={taskData.description} />
+            <input type="text" id="description" name="description" 
+            onChange={handleChange} value={taskData.description} />
             <button type="submit">Submit</button>
         </form>
     );
